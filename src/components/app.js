@@ -2,15 +2,15 @@ import React, { Component } from 'react';
 import Immutable from 'immutable';
 import Createbar from './createbar';
 import Note from './note';
-
+import * as db from '../services/database';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      // eslint-disable-next-line new-cap
       notes: Immutable.Map(),
-      noteID: 0,
     };
 
     this.onCreate = this.onCreate.bind(this);
@@ -19,38 +19,39 @@ class App extends Component {
     this.updateContent = this.updateContent.bind(this);
   }
 
+  componentDidMount() {
+    db.fetchNotes((notes) => {
+      // eslint-disable-next-line new-cap
+      this.setState({ notes: Immutable.Map(notes) });
+    });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
   onCreate(title) {
     const newNote = {
-      id: this.state.noteID,
       title,
       content: '',
-      x: 0,
-      y: 0,
+      x: 10,
+      y: 10,
       zIndex: 0,
     };
 
-    this.setState(prevState => ({
-      notes: prevState.notes.set(prevState.noteID, newNote),
-      noteID: prevState.noteID + 1,
-    }));
+    db.addNote(newNote);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   onDelete(id) {
-    this.setState(prevState => ({
-      notes: prevState.notes.delete(id),
-    }));
+    db.deleteNote(id);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   onDrag(id, x, y) {
-    this.setState(prevState => ({
-      notes: prevState.notes.update(id, (n) => { return Object.assign({}, n, { x, y }); }),
-    }));
+    db.updatePosition(id, x, y);
   }
 
+  // eslint-disable-next-line class-methods-use-this
   updateContent(id, content, title) {
-    this.setState(prevState => ({
-      notes: prevState.notes.update(id, (n) => { return Object.assign({}, n, { content, title }); }),
-    }));
+    db.updateContent(id, content, title);
   }
 
   render() {

@@ -72,8 +72,10 @@ class Note extends Component {
 
   renderIcon() {
     if (this.state.isEditing) {
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       return <i onClick={this.onEdit} className="fas fa-check" />;
     } else {
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
       return <i onClick={this.onEdit} className="fas fa-edit" />;
     }
   }
@@ -89,7 +91,8 @@ class Note extends Component {
             <h1>{this.props.note.title}</h1>
             <div id="icons">
               {/* eslint-disable-next-line react/no-unknown-property */}
-              <i onClick={this.onDelete} class="fas fa-trash" />
+              {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
+              <i onClick={this.onDelete} className="fas fa-trash" />
               {/* eslint-disable-next-line react/no-unknown-property */}
               {this.renderIcon()}
             </div>
