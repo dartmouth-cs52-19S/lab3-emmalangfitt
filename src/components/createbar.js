@@ -20,7 +20,7 @@ class Createbar extends Component {
 
   render() {
     return (
-      <div id="search-bar">
+      <div id="createbar">
         <input value={this.state.title} onChange={this.onInputChange} />
         <button type="submit" onClick={this.onCreate}>Create</button>
       </div>

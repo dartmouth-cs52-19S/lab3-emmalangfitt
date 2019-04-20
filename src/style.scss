@@ -1,0 +1,66 @@
+$fontcolor:  rgb(10%, 10%, 10%);
+$shadowcolor:  rgb(70%, 70%, 70%);
+$backgroundcolor: rgb(96%, 95%, 95%);
+
+body {
+    color: $fontcolor;
+    background-color: $backgroundcolor;
+}
+
+#topbar {
+    background-color: #ffffff;
+    width: 100vw;
+    height: 5vw;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 15px;
+}
+
+#createbar {
+    input {
+        margin-right: 15px;
+    }
+
+    button {
+        background-color: transparent;
+    }
+}
+
+.react-draggable {
+    position: absolute;
+    background-color: #ffffff;
+    padding: 1vw;
+
+    #note-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1 {
+        padding-right: 2vw;
+        padding-left: .5vw;
+    }
+
+    i {
+        padding-right: .5vw;
+    }
+
+    .content {
+        padding: .5vw;
+        display: flex;
+        flex-direction: column;
+    }
+
+    #editing {
+        padding: .5vw;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            margin-bottom: 1vw;
+        }
+    }
+
+}

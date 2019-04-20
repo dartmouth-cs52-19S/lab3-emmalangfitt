@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Map } from 'immutable';
+import Immutable from 'immutable';
 import Createbar from './createbar';
 import Note from './note';
 
@@ -9,13 +9,14 @@ class App extends Component {
     super(props);
 
     this.state = {
-      notes: Map(),
+      notes: Immutable.Map(),
       noteID: 0,
     };
 
     this.onCreate = this.onCreate.bind(this);
     this.onDelete = this.onDelete.bind(this);
     this.onDrag = this.onDrag.bind(this);
+    this.updateContent = this.updateContent.bind(this);
   }
 
   onCreate(title) {
@@ -42,20 +43,33 @@ class App extends Component {
 
   onDrag(id, x, y) {
     this.setState(prevState => ({
-      notes: prevState.notes.update(id, (n) => { return Object.assign({}, n, x, y); }),
+      notes: prevState.notes.update(id, (n) => { return Object.assign({}, n, { x, y }); }),
+    }));
+  }
+
+  updateContent(id, content, title) {
+    this.setState(prevState => ({
+      notes: prevState.notes.update(id, (n) => { return Object.assign({}, n, { content, title }); }),
     }));
   }
 
   render() {
     return (
       <div>
-        <div>
+        <div id="topbar">
+          <h2>My Notes</h2>
           <Createbar onCreate={this.onCreate} />
         </div>
         <div>
           {this.state.notes.entrySeq().map(([id, note]) => {
             return (
-              <Note id={id} note={note} onDelete={this.onDelete} onDrag={this.onDrag} />
+              <Note
+                id={id}
+                note={note}
+                onDelete={this.onDelete}
+                onDrag={this.onDrag}
+                updateContent={this.updateContent}
+              />
             );
           })}
         </div>
