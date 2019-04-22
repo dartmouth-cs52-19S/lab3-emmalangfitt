@@ -18,3 +18,4 @@ I used a few JavaScript libraries to help with the app's functionality, includin
 
 
 ## Results
+I now have a web app where users can add notes, edit the content, drag notes, delete notes, and sync the changes across multiple devices. For extra credit, I added in a dropdown icon that toggles to hide or show the content of the notes, and I set the z-index so that a note displays on top of other notes when it is clicked on. The app is hosted [here](http://emma-cs52-notes.surge.sh/).
