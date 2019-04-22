@@ -10,6 +10,7 @@ class Note extends Component {
 
     this.state = {
       isEditing: false,
+      isShowing: true,
       content: this.props.note.content,
       title: this.props.note.title,
     };
@@ -17,6 +18,7 @@ class Note extends Component {
     this.onDelete = this.onDelete.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onEdit = this.onEdit.bind(this);
+    this.onDropClick = this.onDropClick.bind(this);
     this.onContentChange = this.onContentChange.bind(this);
     this.onTitleChange = this.onTitleChange.bind(this);
   }
@@ -47,8 +49,14 @@ class Note extends Component {
     this.setState({ title: event.target.value });
   }
 
+  onDropClick() {
+    this.setState(prevState => ({
+      isShowing: !prevState.isShowing,
+    }));
+  }
+
   renderContents() {
-    if (this.state.isEditing) {
+    if (this.state.isShowing && this.state.isEditing) {
       return (
         <div id="editing">
           <TextareaAutosize defaultValue={this.props.note.content}
@@ -58,11 +66,22 @@ class Note extends Component {
           />
         </div>
       );
-    } else {
+    } else if (this.state.isShowing && !this.state.isEditing) {
       return <div className="content" dangerouslySetInnerHTML={{ __html: marked(this.props.note.content || '') }} />;
+    } else {
+      return <div />;
     }
   }
 
+  renderDropdown() {
+    if (this.state.isShowing) {
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      return <i onClick={this.onDropClick} className="fas fa-chevron-down" />;
+    } else {
+      // eslint-disable-next-line jsx-a11y/no-static-element-interactions
+      return <i onClick={this.onDropClick} className="fas fa-chevron-up" />;
+    }
+  }
 
   renderHeader() {
     if (this.state.isEditing) {
@@ -81,6 +100,7 @@ class Note extends Component {
             {/* eslint-disable-next-line react/no-unknown-property */}
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <i onClick={this.onEdit} className="fas fa-check" />
+            {this.renderDropdown()}
           </div>
         </div>
       );
@@ -95,6 +115,7 @@ class Note extends Component {
             {/* eslint-disable-next-line react/no-unknown-property */}
             {/* eslint-disable-next-line jsx-a11y/no-static-element-interactions */}
             <i onClick={this.onEdit} className="fas fa-edit" />
+            {this.renderDropdown()}
           </div>
         </div>
       );
