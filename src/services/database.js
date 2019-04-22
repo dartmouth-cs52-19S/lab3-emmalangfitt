@@ -31,8 +31,8 @@ export function updateContent(id, content, title) {
   db.ref('notes').child(id).update({ content, title });
 }
 
-export function updatePosition(id, x, y) {
-  db.ref('notes').child(id).update({ x, y });
+export function updatePosition(id, x, y, z) {
+  db.ref('notes').child(id).update({ x, y, z });
 }
 
 export function addNote(newNote) {

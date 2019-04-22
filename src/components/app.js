@@ -11,6 +11,7 @@ class App extends Component {
     this.state = {
       // eslint-disable-next-line new-cap
       notes: Immutable.Map(),
+      nextZ: 1,
     };
 
     this.onCreate = this.onCreate.bind(this);
@@ -21,22 +22,26 @@ class App extends Component {
 
   componentDidMount() {
     db.fetchNotes((notes) => {
-      // eslint-disable-next-line new-cap
-      this.setState({ notes: Immutable.Map(notes) });
+      this.setState({
+        // eslint-disable-next-line new-cap
+        notes: Immutable.Map(notes),
+      });
     });
   }
 
   // eslint-disable-next-line class-methods-use-this
   onCreate(title) {
+    console.log(this.state.nextZ);
     const newNote = {
       title,
       content: '',
       x: 10,
       y: 10,
-      zIndex: 0,
+      z: this.state.nextZ,
     };
 
     db.addNote(newNote);
+    this.state.nextZ = this.state.nextZ + 1;
   }
 
   // eslint-disable-next-line class-methods-use-this
@@ -46,7 +51,8 @@ class App extends Component {
 
   // eslint-disable-next-line class-methods-use-this
   onDrag(id, x, y) {
-    db.updatePosition(id, x, y);
+    db.updatePosition(id, x, y, this.state.nextZ);
+    this.state.nextZ = this.state.nextZ + 1;
   }
 
   // eslint-disable-next-line class-methods-use-this

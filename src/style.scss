@@ -38,29 +38,22 @@ body {
         align-items: center;
     }
 
-    h1 {
+    h4 {
         padding-right: 2vw;
         padding-left: .5vw;
+        margin-bottom: 0;
     }
 
     i {
-        padding-right: .5vw;
+        padding-left: .5vw;
     }
 
     .content {
         padding: .5vw;
-        display: flex;
-        flex-direction: column;
     }
 
     #editing {
-        padding: .5vw;
-        display: flex;
-        flex-direction: column;
-
-        input {
-            margin-bottom: 1vw;
-        }
+        padding-top: .7vw;
     }
 
 }
